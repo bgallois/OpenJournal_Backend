@@ -60,6 +60,15 @@ def parse_request():
                 else:
                     return {"type": data["type"], "data": data["data"],
                             "content": resp, "identifier": data["identifier"]}
+            elif data["type"] == "query_all":
+                resp = database_query_all(
+                    data["user"],
+                    data["password"],
+                    get_db_name(data["user"], data["password"]),
+                    data["data"],
+                    data["identifier"])
+                return {"type": data["type"], "data": data["data"],
+                        "content": resp, "identifier": data["identifier"]}
             elif data["type"] == "insert":
                 resp = database_insert(
                     data["user"],

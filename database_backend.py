@@ -41,6 +41,23 @@ def database_query(user, password, journal, data, identifier):
             response = response[0].decode()
         return response
 
+def database_query_all(user, password, journal, data, identifier):
+    '''
+    '''
+    cnx = mysql.connector.connect(
+        user=USER,
+        password=PASS,
+        host='127.0.0.1',
+        database=journal)
+    query = "SELECT * FROM journalPage ORDER BY date"
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    response = ""
+    for date, entry in cursor:
+        response += "# " + date + "\n" + entry + "\n\n"
+    cursor.close()
+    cnx.close()
+    return response
 
 def database_delete(user, password, journal, data, identifier):
     '''
